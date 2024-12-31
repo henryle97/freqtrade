@@ -1,11 +1,10 @@
 """Kucoin exchange subclass."""
 
 import logging
-from typing import Dict
 
 from freqtrade.constants import BuySell
 from freqtrade.exchange import Exchange
-from freqtrade.exchange.exchange_types import FtHas
+from freqtrade.exchange.exchange_types import CcxtOrder, FtHas
 
 
 logger = logging.getLogger(__name__)
@@ -32,7 +31,7 @@ class Kucoin(Exchange):
         "ohlcv_candle_limit": 1500,
     }
 
-    def _get_stop_params(self, side: BuySell, ordertype: str, stop_price: float) -> Dict:
+    def _get_stop_params(self, side: BuySell, ordertype: str, stop_price: float) -> dict:
         params = self._params.copy()
         params.update({"stopPrice": stop_price, "stop": "loss"})
         return params
@@ -48,7 +47,7 @@ class Kucoin(Exchange):
         leverage: float,
         reduceOnly: bool = False,
         time_in_force: str = "GTC",
-    ) -> Dict:
+    ) -> CcxtOrder:
         res = super().create_order(
             pair=pair,
             ordertype=ordertype,
